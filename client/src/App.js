@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 
+import { Layout } from "./components/Layout";
 import { Players } from "./components/Players";
+import GlobalStyles from "./GlobalStyles";
 
 export default class App extends Component {
   state = {
@@ -35,16 +37,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <Router>
-          <Route exact path="/">
-            <Players state={this.state} category="players"></Players>
-          </Route>
+      <Router>
+        <Layout>
+          <GlobalStyles></GlobalStyles>
           <Route path="/favorites">
             <Players state={this.state} category="favorites"></Players>
           </Route>
-        </Router>
-      </div>
+          <Route exact path="/home">
+            <Players state={this.state} category="players"></Players>
+          </Route>
+        </Layout>
+      </Router>
     );
   }
 }
