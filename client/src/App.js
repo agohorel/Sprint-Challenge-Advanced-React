@@ -35,16 +35,35 @@ export default class App extends Component {
     this.setState({ favorites });
   }
 
+  updateFavorites = player => {
+    // this.setState(prev => ({
+    //   favorites: [...prev.favorites, player]
+    // }));
+    // this.setState({ favorites: this.state.favorites.concat(player) });
+    this.setState({ favorites: player }, () => {
+      console.log(this.state.favorites);
+    });
+  };
+
   render() {
     return (
       <Router>
         <Layout>
           <GlobalStyles></GlobalStyles>
           <Route path="/favorites">
-            <Players state={this.state} category="favorites"></Players>
+            <Players
+              state={this.state}
+              category="favorites"
+              favorites={this.state.favorites}
+            ></Players>
           </Route>
           <Route exact path="/home">
-            <Players state={this.state} category="players"></Players>
+            <Players
+              state={this.state}
+              category="players"
+              updateFavorites={this.updateFavorites}
+              favorites={this.state.favorites}
+            ></Players>
           </Route>
         </Layout>
       </Router>

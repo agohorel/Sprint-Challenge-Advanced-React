@@ -1,12 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-export const Player = ({ player, favoritePlayers, setFavoritePlayers }) => {
+export const Player = ({
+  player,
+  favoritePlayers,
+  setFavoritePlayers,
+  updateFavorites,
+  favorites
+}) => {
   if (player) {
     return (
       <PlayerCard
         data-testid="player"
-        onClick={() => setFavoritePlayers(favoritePlayers.concat(player))}
+        onClick={() => {
+          setFavoritePlayers(favoritePlayers.concat(player));
+          updateFavorites(favorites.concat(player));
+        }}
       >
         <h2>Name: {player.name}</h2>
         <h3>Country: {player.country}</h3>
