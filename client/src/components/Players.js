@@ -2,9 +2,15 @@ import React from "react";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Player } from "./Player";
 
-export const Players = ({ state }) => {
+export const Players = ({ state, category }) => {
+  const [favoritePlayers, setFavoritePlayers] = useLocalStorage(
+    "favorite_players",
+    []
+  );
+
   if (state.loading) {
     return (
       <div data-testid="loader">
@@ -20,8 +26,13 @@ export const Players = ({ state }) => {
   } else {
     return (
       <div>
-        {state.players.map(player => (
-          <Player key={player.id} player={player}></Player>
+        {state[category].map(player => (
+          <Player
+            key={player.id}
+            player={player}
+            favoritePlayers={favoritePlayers}
+            setFavoritePlayers={setFavoritePlayers}
+          ></Player>
         ))}
       </div>
     );

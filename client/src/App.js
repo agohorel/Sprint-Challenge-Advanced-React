@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 
 import { Players } from "./components/Players";
@@ -6,6 +7,7 @@ import { Players } from "./components/Players";
 export default class App extends Component {
   state = {
     players: [],
+    favorites: [],
     loading: false
   };
 
@@ -24,12 +26,24 @@ export default class App extends Component {
     };
 
     fetch("http://localhost:5000/api/players");
+
+    const favorites =
+      JSON.parse(window.localStorage.getItem("favorite_players")) || [];
+
+    this.setState({ favorites });
   }
 
   render() {
     return (
       <div>
-        <Players state={this.state}></Players>
+        <Router>
+          <Route exact path="/">
+            <Players state={this.state} category="players"></Players>
+          </Route>
+          <Route path="/favorites">
+            <Players state={this.state} category="favorites"></Players>
+          </Route>
+        </Router>
       </div>
     );
   }
