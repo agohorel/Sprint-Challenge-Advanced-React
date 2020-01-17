@@ -7,13 +7,15 @@ import { Player } from "./Player";
 export const Players = ({ state }) => {
   if (state.loading) {
     return (
-      <Loader
-        type="Puff"
-        color="#00BFFF"
-        height={100}
-        width={100}
-        timeout={3000} //3 secs
-      />
+      <div data-testid="loader">
+        <Loader
+          type="Puff"
+          color="#00BFFF"
+          height={100}
+          width={100}
+          timeout={3000}
+        />
+      </div>
     );
   } else {
     return (
@@ -21,7 +23,6 @@ export const Players = ({ state }) => {
         {state.players.map(player => (
           <Player key={player.id} player={player}></Player>
         ))}
-        <Player></Player>
       </div>
     );
   }
